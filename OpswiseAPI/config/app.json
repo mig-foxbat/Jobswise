@@ -1,0 +1,32 @@
+{
+   "server":{
+         "username":"chlr",
+         "password":"f-22raptor",
+         "host":"10.8.22.75",
+         "port":"8080"
+      },
+      "url":{
+         "task":{
+            "create":"/opswise/resources/task/ops-task-create",
+            "launch":"/opswise/resources/task/ops-task-launch"
+          },
+         "trigger":{
+            "create_temp":"/opswise/resources/trigger/ops-create-temp-trigger",
+            "launch":"/opswise/resources/trigger/ops-trigger-now",
+            "switch":"/opswise/resources/trigger/ops-enable-disable-triggers"
+          },
+         "agents": {
+         "list" : "/opswise/resources/agents/list"
+          },
+         "variables": {
+         "set": "/opswise/resources/variable/ops-variable-set"
+          },
+         "virtual_resource" : {
+         "limit" : "/opswise/resources/virtual/ops-update-resource-limit"
+          }
+      },
+      "general":
+      {
+      	"template_path" : "config/opswise/"
+      }
+}

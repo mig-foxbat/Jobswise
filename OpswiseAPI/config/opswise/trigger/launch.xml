@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<#assign trigger = config?eval>
+<trigger-now>
+    <name>${trigger.name}</name>
+     <variables>
+    <#list trigger.vars?keys as var>
+        <variable>
+        	<name>${var}</name>
+        	<value>${trigger.vars[var]} </value>
+        </variable>    
+    </#list>
+    </variables>
+</trigger-now> 

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<#assign task = config?eval>
+<task-launch>
+    <name>${task.name}</name>
+    <variables>
+    <#list task.vars?keys as var>
+        <variable>
+        	<name>${var}</name>
+        	<value>${task.vars[var]} </value>
+        </variable>    
+    </#list>
+    </variables>
+</task-launch> 
