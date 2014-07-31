@@ -45,12 +45,14 @@ public class XMLRequestGenerator {
 			OpswiseAPIManager opswise = new OpswiseAPIManager();
 			JSONObject json = new JSONObject();
 			json.put("name", "autobot_job1");
-			JSONObject vars = new JSONObject();
-			vars.put("address", "mig.flanker@gmail.com");
-			vars.put("connection", "localhost");
-			json.put("vars", vars);
-			opswise.getTriggerManager().launch(json);
-
+			json.put("command", "All Hail Megatron");
+			json.put("agent", "pit-prod-scrs");
+			JSONObject email = new JSONObject();
+			email.put("address", "mig.flanker@gmail.com");
+			email.put("connection", "localhost");
+			json.put("email", email);
+			System.out.println(opswise.getTaskHandler().create(json).toString());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

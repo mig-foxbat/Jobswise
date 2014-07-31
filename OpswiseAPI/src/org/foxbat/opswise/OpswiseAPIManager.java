@@ -8,14 +8,14 @@ public class OpswiseAPIManager {
 	public OpswiseAPIManager(){
 	}
 	
-	public TaskManager getTaskManager()
+	public TaskHandler getTaskHandler()
 	{
-		return new TaskManager();
+		return new TaskHandler();
 	}
 	
-	public TriggerManager getTriggerManager()
+	public TriggerHandler getTriggerHandler()
 	{
-		return new TriggerManager();
+		return new TriggerHandler();
 	}
 	
 }
