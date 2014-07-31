@@ -1,7 +1,7 @@
 {
    "server":{
          "username":"chlr",
-         "password":"******",
+         "password":"*******",
          "host":"10.8.22.75",
          "port":"8080"
       },
