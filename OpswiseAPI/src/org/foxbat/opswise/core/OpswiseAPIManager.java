@@ -1,4 +1,4 @@
-package org.foxbat.opswise;
+package org.foxbat.opswise.core;
 
 import java.util.Map;
 

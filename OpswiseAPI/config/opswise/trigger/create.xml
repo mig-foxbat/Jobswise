@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<#assign trigger = config?eval>
+<unload unload_date="2014-08-05 22:06:08" unload_format="1" unload_table="ops_trigger_cron" unload_version="5.1.1.4">
+   <ops_trigger_cron action="INSERT_OR_UPDATE">
+      <restriction_complex>false</restriction_complex>
+      <last_forecast_time />
+      <sys_created_on>2013-07-09 04:53:51</sys_created_on>
+      <restriction_simple>true</restriction_simple>
+      <type>1</type>
+      <restriction_mode>2</restriction_mode>
+      <version>3</version>
+      <day_of_week>${trigger.cron.day_of_week}</day_of_week>
+      <skip_count>0</skip_count>
+      <sys_updated_by>${trigger.user_name}</sys_updated_by>
+      <description>Optimus trigger for task ${trigger.name}</description>
+      <name>${trigger.name}</name>
+      <next_scheduled_time />
+      <action>1</action>
+      <sys_mod_count>2</sys_mod_count>
+      <opswise_groups />
+      <situation>1</situation>
+      <enabled_by/>
+      <calendar display_value="System Default">77171434c0a801c9016d5b2b5d17ddee</calendar>
+      <enabled>true</enabled>
+      <restrict_adjective>0</restrict_adjective>
+      <minutes>${trigger.cron.minutes}</minutes>
+      <criteria>${trigger.cron.minutes} ${trigger.cron.hours} ${trigger.cron.day_of_month} ${trigger.cron.month} ${trigger.cron.day_of_week}</criteria>
+      <restriction>false</restriction>
+      <forecast>false</forecast>
+      <hours>${trigger.cron.hours}</hours>
+      <task>${trigger.task_id}</task>
+      <sys_id>${trigger.sys_id}</sys_id>
+      <sys_updated_on>2013-07-09 04:54:23</sys_updated_on>
+      <restrict_qualifier>13</restrict_qualifier>
+      <restrict_noun>8</restrict_noun>
+      <sys_created_by>${trigger.user_name}</sys_created_by>
+      <orig_scheduled_time />
+      <time_zone />
+      <sys_class_name>ops_trigger_cron</sys_class_name>
+      <month>${trigger.cron.month}</month>
+      <skip_active>true</skip_active>
+      <day_of_month>${trigger.cron.day_of_month}</day_of_month>
+      <related_items_node />
+   </ops_trigger_cron>
+</unload>

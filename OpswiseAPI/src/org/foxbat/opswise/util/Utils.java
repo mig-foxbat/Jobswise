@@ -1,4 +1,4 @@
-package org.foxbat.opswise;
+package org.foxbat.opswise.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,30 +8,10 @@ import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.XML;
 
 public class Utils {
 
-	// public static JsonX<String, Object> jsontoMapConverter(JSONObject json) {
-	// @SuppressWarnings("unchecked")
-	// Iterator<String> keys = json.keys();
-	// JsonX<String, Object> result = new JsonX<String, Object>();
-	// while (keys.hasNext()) {
-	// try {
-	// String key = keys.next();
-	// Object value = json.get(key);
-	// if (value instanceof JSONObject)
-	// result.put(key, jsontoMapConverter((JSONObject) value));
-	// else
-	// result.put(key, value);
-	//
-	// } catch (JSONException e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
-	//
-	// return result;
-	// }
 
 	@SuppressWarnings("unchecked")
 	public static Map<String, Object> mergeMaps(Map<String, Object> base,
@@ -51,6 +31,20 @@ public class Utils {
 			}
 		}
 		return base;
+	}
+	
+	public static JSONObject XMLtoJsonConverter(String xml)
+	{
+		try
+		{
+		return XML.toJSONObject(xml);
+		}
+		catch(JSONException e)
+		{
+			e.printStackTrace();
+			return null;
+			
+		}
 	}
 
 	public static JSONObject getJSONConfig(String filepath) {

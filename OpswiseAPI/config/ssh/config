@@ -1,0 +1,50 @@
+# .ssh/config - access Groupon servers via SSH
+#
+# This version of the .ssh/config file is for people accessing Groupon
+# hosts via the Internet. If you have a headless role account, for
+# example, for a Capistrano deploy, please use this variant instead:
+# https://ssh.groupondev.com/role_config
+#
+# For more information, see this Groupon internal Wiki page:
+# https://wiki.groupondev.com/Remote_access
+#
+# For questions, comments, or bug reports, please e-mail:
+# prod-tools@groupon.com
+#
+# This file comes from the ssh_config dir in the ops-package-recipes repo:
+# git clone git:ops-package-recipes
+#
+# You can download it from the Internet through your browser:
+# https://ssh.groupondev.com/config
+
+Host git git.groupon.com
+  User git
+  ProxyCommand ssh -q b.snc1.groupon.com nc git %p
+
+Host github github.groupon.com github.groupondev.com
+  User git
+  ProxyCommand ssh -q b.snc1.groupon.com nc github %p
+
+Host *.snc1
+  ProxyCommand ssh -q b.snc1.groupon.com nc %h %p
+
+Host *.lup1
+  ProxyCommand ssh -q b.lup1.groupon.com nc %h %p
+
+Host *.east
+  ProxyCommand ssh -q b.east.groupon.com nc %h %p
+
+Host *.west
+  ProxyCommand ssh -q b.west.groupon.com nc %h %p
+
+Host *.eu
+  ProxyCommand ssh -q b.eu.groupon.com nc %h %p
+
+Host *.west2
+  ProxyCommand ssh -q b.west2.groupon.com nc %h %p
+
+Host *
+  ForwardAgent yes
+  StrictHostKeyChecking no
+  ServerAliveInterval 120
+  User chlr

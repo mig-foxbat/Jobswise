@@ -1,4 +1,4 @@
-package org.foxbat.opswise;
+package org.foxbat.opswise.util;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -6,6 +6,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.foxbat.opswise.core.OpswiseAPIManager;
 import org.json.JSONObject;
 
 import freemarker.template.Configuration;
@@ -32,7 +33,6 @@ public class XMLRequestGenerator {
 			Template template = cfg.getTemplate(template_path);
 			Writer writer = new StringWriter();
 			template.process(map, writer);
-			System.out.println(writer.toString());
 			return writer.toString();
 		} catch (TemplateException | IOException e) {
 			e.printStackTrace();
@@ -41,19 +41,26 @@ public class XMLRequestGenerator {
 	}
 
 	public static void main(String args[]) {
-		try {
-			OpswiseAPIManager opswise = new OpswiseAPIManager();
-			JSONObject json = new JSONObject();
-			json.put("name", "autobot_job1");
-			json.put("command", "All Hail Megatron");
-			json.put("agent", "pit-prod-scrs");
-			JSONObject email = new JSONObject();
-			email.put("address", "mig.flanker@gmail.com");
-			email.put("connection", "localhost");
-			json.put("email", email);
-			System.out.println(opswise.getTaskHandler().create(json).toString());
-			
-		} catch (Exception e) {
+		try 
+		{
+		OpswiseAPIManager opswise = new OpswiseAPIManager();
+		JSONObject json = new JSONObject();
+		json.put("name", "tgr_autobot_job1");	
+		json.put("task_name", "autobot_job1");
+		json.put("user_name", "chlr");
+		json.put("task_id", "");
+		json.put("sys_id", "");
+		JSONObject cron = new JSONObject();
+		cron.put("minutes", "34");
+		cron.put("hours", "*");
+		cron.put("day_of_week", "*");
+		cron.put("day_of_month", "*");
+		cron.put("month", "*");
+		json.put("cron", cron);
+		opswise.getTriggerHandler().create(json);
+		}
+		catch(Exception e)
+		{
 			e.printStackTrace();
 		}
 	}

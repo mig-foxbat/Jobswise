@@ -1,16 +1,33 @@
 {
    "server":{
          "username":"chlr",
-         "password":"*******",
-         "host":"10.8.22.75",
-         "port":"8080"
+         "password":"****",
+         "host":"your-host",
+         "port":"80",
+         "ssh": {
+        	 "host":"your-host",
+       	     "user":"chlr",
+       	     "port": "22",
+       	     "dir": "/home/chlr/optimus/"
+               },
+          "database" : {
+          "host":"your-host",
+          "username":"username",
+          "password":"password",
+          "port":"3306",
+          "database": "opswise"
+          }
       },
       "url":{
+      
+         "general":{ "login" : "/opswise/login.do"
+         },
          "task":{
             "create":"/opswise/resources/task/ops-task-create",
             "launch":"/opswise/resources/task/ops-task-launch"
           },
          "trigger":{
+            "create" : "/opswise/opswise_import_execute.do",
             "create_temp":"/opswise/resources/trigger/ops-create-temp-trigger",
             "launch":"/opswise/resources/trigger/ops-trigger-now",
             "switch":"/opswise/resources/trigger/ops-enable-disable-triggers"
@@ -27,6 +44,7 @@
       },
       "general":
       {
-      	"template_path" : "config/opswise/"
+      	"config_path" : "./"
+     	
       }
 }
