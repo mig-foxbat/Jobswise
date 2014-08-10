@@ -31,8 +31,12 @@ public class RemoteShellManager implements Runnable {
 	static {
 		try {
 			jsch = new JSch();
-			jsch.addIdentity(AppConfig.getInstance().config.getJSONObject("general").getString("config_path")+"/config/ssh/id_rsa");
-			jsch.setKnownHosts(AppConfig.getInstance().config.getJSONObject("general").getString("config_path")+"config/ssh/known_hosts");
+			jsch.addIdentity(AppConfig.getInstance().config.getJSONObject(
+					"general").getString("config_path")
+					+ "/config/ssh/id_rsa");
+			jsch.setKnownHosts(AppConfig.getInstance().config.getJSONObject(
+					"general").getString("config_path")
+					+ "config/ssh/known_hosts");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,7 +45,7 @@ public class RemoteShellManager implements Runnable {
 	public RemoteShellManager(String user, String agent, int port) {
 		try {
 			session = jsch.getSession(user, agent, port);
-			java.util.Properties config = new java.util.Properties(); 
+			java.util.Properties config = new java.util.Properties();
 			config.put("StrictHostKeyChecking", "no");
 			session.setConfig(config);
 			session.connect();
@@ -56,26 +60,28 @@ public class RemoteShellManager implements Runnable {
 		this.current_mode = Mode.COMMAND;
 		th = new Thread(this);
 		th.start();
-		while(th.isAlive())
-		{
-			try { Thread.sleep(100); } catch (InterruptedException e) { e.printStackTrace(); } 
+		while (th.isAlive()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
-	
+
 	public void executeSFTP(String... args) {
 		this.args = args;
 		this.current_mode = Mode.SFTP;
 		th = new Thread(this);
 		th.start();
-		while(th.isAlive())
-		{
-			try { Thread.sleep(100); } catch (InterruptedException e) { e.printStackTrace(); } 
+		while (th.isAlive()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
-	
-	
 
 	public boolean isComplete() {
 		return !th.isAlive();
@@ -86,14 +92,12 @@ public class RemoteShellManager implements Runnable {
 	}
 
 	@Override
-	public void run() {	
+	public void run() {
 		if (this.current_mode == Mode.COMMAND)
 			this.command();
 		else if (this.current_mode == Mode.SFTP)
 			this.sftp();
 	}
-	
-	
 
 	private void command() {
 		BufferedReader br = null;
@@ -116,7 +120,11 @@ public class RemoteShellManager implements Runnable {
 		} catch (JSchException | IOException e) {
 			e.printStackTrace();
 		} finally {
-			try { br.close(); } catch (IOException e) { e.printStackTrace(); }
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			this.channel.disconnect();
 		}
 
@@ -124,14 +132,13 @@ public class RemoteShellManager implements Runnable {
 
 	private void sftp() {
 		try {
-			if(!session.isConnected())
-			{
-				System.out.println("Session reconnecting");
+			if (!session.isConnected()) {
 				session.connect();
 			}
 			channel = session.openChannel("sftp");
 			channel.connect();
-			((ChannelSftp) channel).put(new ByteArrayInputStream(args[0].getBytes()), args[1]);
+			((ChannelSftp) channel).put(
+					new ByteArrayInputStream(args[0].getBytes()), args[1]);
 		} catch (SftpException | JSchException e) {
 			e.printStackTrace();
 		} finally {
@@ -139,17 +146,13 @@ public class RemoteShellManager implements Runnable {
 		}
 
 	}
-	
-	public void close()
-	{
-		System.out.println("session disconnect from close");
+
+	public void close() {
 		this.session.disconnect();
 	}
-	
+
 	@Override
-	public void finalize()
-	{
-		System.out.println("session disconnect from finalize");
+	public void finalize() {
 		this.session.disconnect();
 	}
 

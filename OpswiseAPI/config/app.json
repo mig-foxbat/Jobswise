@@ -1,6 +1,6 @@
 {
    "server":{
-         "username":"chlr",
+         "username":"username",
          "password":"****",
          "host":"your-host",
          "port":"80",
@@ -13,7 +13,7 @@
           "database" : {
           "host":"your-host",
           "username":"username",
-          "password":"password",
+          "password":"****",
           "port":"3306",
           "database": "opswise"
           }

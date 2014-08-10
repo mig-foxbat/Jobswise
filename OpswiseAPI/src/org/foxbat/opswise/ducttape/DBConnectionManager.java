@@ -67,7 +67,6 @@ public class DBConnectionManager {
 	public void finalize() {
 		try {
 			if (!conn.isClosed())
-				System.out.println("Closing Database Connection");
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
