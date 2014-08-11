@@ -2,7 +2,6 @@ package org.foxbat.opswise.core;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.foxbat.opswise.AppConfig;
 import org.foxbat.opswise.util.JsonX;
 import org.foxbat.opswise.util.RestAPIManager;
@@ -13,13 +12,12 @@ import org.json.JSONObject;
 
 public abstract class OpswiseObjectHandler 
 {
-	protected JSONObject makeRequest(JSONObject json,String object,String action)
+	protected JSONObject makeRequest(JsonX request_config,JsonX ops_config,String object,String action)
 	{
-		JsonX config = new JsonX(json);
-		String xmlcontent = XMLRequestGenerator.generateRequestXML(config,
-				AppConfig.getInstance().config.getJSONObject("general").getString("config_path")+"config/opswise/"+object+"/" + action+".xml");
-		RestAPIManager rest = new RestAPIManager();
-		Map<String,String> headers = new HashMap<String,String>();
+		String xmlcontent = XMLRequestGenerator.generateRequestXML(request_config,
+				AppConfig.getPath()+"/opswise/"+object+"/" + action+".xml");
+		RestAPIManager rest = new RestAPIManager(ops_config);
+		Map<String,String> headers = new HashMap<>();
 		headers.put("Content-Type", "application/xml");
 		RestResponse output = rest.postDocument(
 				headers,AppConfig.getInstance().config.getJSONObject("url")

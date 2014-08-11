@@ -14,18 +14,19 @@ import org.foxbat.opswise.util.RestAPIManager;
 import org.foxbat.opswise.util.XMLRequestGenerator;
 
 public class OpsTriggerCreator {
-	private JsonX config;
+	private JsonX request_config,ops_config;
 
-	public OpsTriggerCreator(JsonX config) {
-		this.config = config;
+	public OpsTriggerCreator(JsonX ops_config,JsonX request_config) {
+		this.request_config = request_config;
+        this.ops_config = ops_config;
 	}
 
 	public void makeWebRequest() {
-		JsonX json = AppConfig.getInstance().config.getJSONObject("server");
-		RestAPIManager rest = new RestAPIManager();
-		Map<String, String> form = new HashMap<String, String>();
-		form.put("user_name", json.getString("username"));
-		form.put("user_password", json.getString("password"));
+		JsonX json = ops_config.getJSONObject("server");
+		RestAPIManager rest = new RestAPIManager(ops_config);
+		Map<String, String> form = new HashMap<>();
+		form.put("user_name", ops_config.getJSONObject("server").getString("username"));
+		form.put("user_password", ops_config.getJSONObject("server").getString("password"));
 		form.put("sys_action", "sysverb_login");
 		rest.postForm(AppConfig.getInstance().config.getJSONObject("url")
 				.getJSONObject("general").getString("login"), form);
@@ -33,30 +34,26 @@ public class OpsTriggerCreator {
 		form.put("user_name", json.getString("username"));
 		form.put("sysparm_referring_url", "ops_trigger_cron_list.do");
 		form.put("sysparm_target", "ops_trigger_cron");
-		form.put("sysparm_import_dir", AppConfig.getInstance().config.getJSONObject(
-				"server").getJSONObject("ssh").getString("dir") + "/"
-						+ config.getString("name"));
+		form.put("sysparm_import_dir", ops_config.getJSONObject("server").getJSONObject("ssh").getString("dir") + "/"
+                + request_config.getString("name"));
 		rest.postForm(AppConfig.getInstance().config.getJSONObject("url")
 				.getJSONObject("trigger").getString("create"), form);
 	}
 
 	public void createXMLFile() {
-		DBConnectionManager dbc = new DBConnectionManager();
-		String sys_id = dbc.querySysID(config.getString("task_name"));
+		DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
+		String sys_id = dbc.querySysID(request_config.getString("task_name"));
 		dbc.close();
-		config.setString("task_id", sys_id == null ? "" : sys_id);
-		config.setString("sys_id", getMd5Hash(config.getString("name")));
-		String xmlcontent = XMLRequestGenerator.generateRequestXML(config,
-				AppConfig.getInstance().config.getJSONObject("general")
-						.getString("config_path")
-						+ "config/opswise/trigger/create.xml");
-		JsonX ssh_config = AppConfig.getInstance().config.getJSONObject(
+        request_config.setString("task_id", sys_id);
+        request_config.setString("sys_id", getMd5Hash(request_config.getString("name")));
+		String xmlcontent = XMLRequestGenerator.generateRequestXML(request_config,
+				AppConfig.getPath()
+						+ "/opswise/trigger/create.xml");
+		JsonX ssh_config = ops_config.getJSONObject(
 				"server").getJSONObject("ssh");
-		RemoteShellManager shell = new RemoteShellManager(
-				ssh_config.getString("user"), ssh_config.getString("host"),
-				Integer.parseInt(ssh_config.getString("port")));
+		RemoteShellManager shell = new RemoteShellManager(ops_config);
 		String target = ssh_config.getString("dir") + "/"
-				+ config.getString("name");
+				+ request_config.getString("name");
 		shell.executeCommand("mkdir", target);
 		shell.executeSFTP(xmlcontent, target + "/cron_trigger.xml");
 		shell.close();

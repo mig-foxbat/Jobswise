@@ -20,19 +20,22 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.foxbat.opswise.AppConfig;
+
 
 public class RestAPIManager {
-	HttpClient client;
+	private HttpClient client;
+    private final JsonX ops_config;
 
-	public RestAPIManager() {
+	public RestAPIManager(JsonX ops_config)
+    {
+        this.ops_config = ops_config;
 		this.client = getOpswiseHttpClient();
 	}
 
 	private HttpClient getOpswiseHttpClient() {
 
 		CredentialsProvider provider = new BasicCredentialsProvider();
-		JsonX config =  AppConfig.getInstance().config.getJSONObject("server");
+		JsonX config =  ops_config.getJSONObject("server");
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 				config.getString("username"),
 				config.getString("password"));
@@ -44,7 +47,7 @@ public class RestAPIManager {
 
 	public RestResponse postDocument(Map<String, String> headers, String url,
 			String document_content) {
-		JsonX config = AppConfig.getInstance().config.getJSONObject("server");
+		JsonX config = ops_config.getJSONObject("server");
 		HttpPost post = new HttpPost("http://" + config.getString("host") + ":"
 				+ config.getString("port") + url);
 		for (String key : headers.keySet())
@@ -67,7 +70,7 @@ public class RestAPIManager {
 
 	public RestResponse postForm(String url,
 			Map<String, String> formdata) {
-		JsonX config = AppConfig.getInstance().config.getJSONObject("server");
+		JsonX config = ops_config.getJSONObject("server");
 		HttpPost post = new HttpPost("http://" + config.getString("host") + ":"
 				+ config.getString("port") + url);
 		

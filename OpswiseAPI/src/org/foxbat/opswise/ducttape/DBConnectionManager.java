@@ -5,18 +5,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.foxbat.opswise.AppConfig;
 import org.foxbat.opswise.util.JsonX;
 
 public class DBConnectionManager {
-	private static Connection conn;
-
+	private Connection conn;
 	private static final String SQL = "SELECT sys_id FROM ops_task where name = '%s'; ";
+    private JsonX ops_config;
 
-	static {
+	private void initializeConnection() {
 		try {
-			JsonX config = AppConfig.getInstance().config.getJSONObject(
+			JsonX config = ops_config.getJSONObject(
 					"server").getJSONObject("database");
 			conn = DriverManager
 					.getConnection(String.format(
@@ -30,6 +28,13 @@ public class DBConnectionManager {
 			e.printStackTrace();
 		}
 	}
+
+    public DBConnectionManager(JsonX ops_config)
+    {
+        this.ops_config = ops_config;
+        this.initializeConnection();
+    }
+
 
 	public String querySysID(String name) {
 		PreparedStatement stmt = null;
@@ -57,7 +62,7 @@ public class DBConnectionManager {
 	public void close() {
 
 		try {
-			conn.close();
+			this.conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,0 +1,21 @@
+{
+    "server": {
+        "username": "username",
+        "password": "password",
+        "host": "opswise-host",
+        "port": "80",
+        "ssh": {
+            "host": "opswise-host",
+            "user": "username",
+            "port": "22",
+            "dir": "/home/opswise/optimus/"
+        },
+        "database": {
+            "host": "opswise-host",
+            "username": "opswise",
+            "password": "opswise",
+            "port": "3306",
+            "database": "opswise"
+        }
+    }
+}

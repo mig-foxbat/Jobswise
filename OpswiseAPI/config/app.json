@@ -1,50 +1,26 @@
 {
-   "server":{
-         "username":"username",
-         "password":"****",
-         "host":"your-host",
-         "port":"80",
-         "ssh": {
-        	 "host":"your-host",
-       	     "user":"chlr",
-       	     "port": "22",
-       	     "dir": "/home/chlr/optimus/"
-               },
-          "database" : {
-          "host":"your-host",
-          "username":"username",
-          "password":"****",
-          "port":"3306",
-          "database": "opswise"
-          }
-      },
-      "url":{
-      
-         "general":{ "login" : "/opswise/login.do"
-         },
-         "task":{
+    "url":{
+
+        "general":{ "login" : "/opswise/login.do"
+        },
+        "task":{
             "create":"/opswise/resources/task/ops-task-create",
             "launch":"/opswise/resources/task/ops-task-launch"
-          },
-         "trigger":{
+        },
+        "trigger":{
             "create" : "/opswise/opswise_import_execute.do",
             "create_temp":"/opswise/resources/trigger/ops-create-temp-trigger",
             "launch":"/opswise/resources/trigger/ops-trigger-now",
             "switch":"/opswise/resources/trigger/ops-enable-disable-triggers"
-          },
-         "agents": {
-         "list" : "/opswise/resources/agents/list"
-          },
-         "variables": {
-         "set": "/opswise/resources/variable/ops-variable-set"
-          },
-         "virtual_resource" : {
-         "limit" : "/opswise/resources/virtual/ops-update-resource-limit"
-          }
-      },
-      "general":
-      {
-      	"config_path" : "./"
-     	
-      }
+        },
+        "agents": {
+            "list" : "/opswise/resources/agents/list"
+        },
+        "variables": {
+            "set": "/opswise/resources/variable/ops-variable-set"
+        },
+        "virtual_resource" : {
+            "limit" : "/opswise/resources/virtual/ops-update-resource-limit"
+        }
+    }
 }
