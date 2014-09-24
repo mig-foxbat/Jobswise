@@ -2,7 +2,7 @@ package org.foxbat.opswise.core;
 
 import java.util.Map;
 
-import org.foxbat.opswise.ducttape.OpsTriggerCreator;
+import org.foxbat.opswise.ducttape.OpsMockUserInterface;
 import org.foxbat.opswise.util.JsonX;
 import org.json.JSONObject;
 
@@ -16,7 +16,7 @@ public class TriggerHandler extends OpswiseObjectHandler {
 
 
     public void create(JSONObject request_config) {
-        OpsTriggerCreator ops_trigger = new OpsTriggerCreator(this.ops_config,new JsonX(request_config));
+        OpsMockUserInterface ops_trigger = new OpsMockUserInterface(this.ops_config,new JsonX(request_config));
         ops_trigger.createXMLFile();
         ops_trigger.makeWebRequest();
     }

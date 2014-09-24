@@ -6,6 +6,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 import org.foxbat.opswise.core.OpswiseAPIManager;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.File;
 import freemarker.template.Configuration;
@@ -34,6 +35,7 @@ public class XMLRequestGenerator {
 			Template template = cfg.getTemplate(template_path);
 			Writer writer = new StringWriter();
 			template.process(map, writer);
+            System.out.println(writer.toString());
 			return writer.toString();
 		} catch (TemplateException | IOException e) {
 			e.printStackTrace();
@@ -46,45 +48,29 @@ public class XMLRequestGenerator {
 
 		try
 		{
-		OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
-		JSONObject json = new JSONObject();
-		json.put("name", "tgr_autobot_job1");
-		json.put("task_name", "autobot_job3");
-		json.put("user_name", "chlr");
-		json.put("task_id", "");
-		json.put("sys_id", "");
-		JSONObject cron = new JSONObject();
-		cron.put("minutes", "*/2");
-		cron.put("hours", "*");
-		cron.put("day_of_week", "*");
-		cron.put("day_of_month", "*");
-		cron.put("month", "*");
-		json.put("cron", cron);
-		opswise.getTriggerHandler().create(json);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+            OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
+            JSONObject json = new JSONObject();
+            json.put("tgr_autobot_job","true");
+            opswise.getTriggerHandler().switchTrigger(json);
 
 
-//        try
-//        {
-//    		OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
+
+//            OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
 //            JSONObject json = new JSONObject();
 //            json.put("name", "autobot_job2");
 //            json.put("command", "echo All Hail Megatron");
 //            json.put("agent", "pit-dev-owagent1 - AGNT0007");
 //            JSONObject email = new JSONObject();
-//            email.put("address", "mig.flanker@gmail.com");
+//            email.put("address", "chlr@groupon.com");
 //            email.put("connection", "Gmail - dw_etl");
 //            json.put("email", email);
 //            opswise.getTaskHandler().create(json);
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
+        }
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 
 }

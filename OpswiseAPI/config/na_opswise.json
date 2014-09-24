@@ -1,17 +1,17 @@
 {
     "server": {
-        "username": "username",
-        "password": "password",
-        "host": "opswise-host",
+        "username": "chlr",
+        "password": "seriesT-800",
+        "host": "pit-dev-owmaster1.snc1",
         "port": "80",
         "ssh": {
-            "host": "opswise-host",
-            "user": "username",
+            "host": "pit-dev-owmaster1.snc1",
+            "user": "chlr",
             "port": "22",
-            "dir": "/home/opswise/optimus/"
+            "dir": "/home/chlr/optimus/"
         },
         "database": {
-            "host": "opswise-host",
+            "host": "pit-dev-owmaster1.snc1",
             "username": "opswise",
             "password": "opswise",
             "port": "3306",
@@ -19,3 +19,5 @@
         }
     }
 }
+
+

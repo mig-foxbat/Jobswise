@@ -6,16 +6,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.foxbat.opswise.AppConfig;
 import org.foxbat.opswise.util.JsonX;
 import org.foxbat.opswise.util.RemoteShellManager;
 import org.foxbat.opswise.util.RestAPIManager;
 import org.foxbat.opswise.util.XMLRequestGenerator;
 
-public class OpsTriggerCreator {
+public class OpsMockUserInterface {
 	private JsonX request_config,ops_config;
 
-	public OpsTriggerCreator(JsonX ops_config,JsonX request_config) {
+	public OpsMockUserInterface(JsonX ops_config, JsonX request_config) {
 		this.request_config = request_config;
         this.ops_config = ops_config;
 	}
