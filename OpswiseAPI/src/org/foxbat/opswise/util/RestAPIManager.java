@@ -71,6 +71,10 @@ public class RestAPIManager {
 	public RestResponse postForm(String url,
 			Map<String, String> formdata) {
 		JsonX config = ops_config.getJSONObject("server");
+
+        System.out.println("http://" + config.getString("host") + ":"
+                + config.getString("port") + url);
+
 		HttpPost post = new HttpPost("http://" + config.getString("host") + ":"
 				+ config.getString("port") + url);
 		
@@ -80,6 +84,7 @@ public class RestAPIManager {
 		try {
 			post.setEntity(new UrlEncodedFormEntity(urlParameters));
 			HttpResponse response = client.execute(post);
+            System.out.println("\n\n\n--------------------------------------------------\n\n\n");
 			RestResponse result = new RestResponse(
 					getResponseString(response.getEntity()),
 					response.getAllHeaders());
@@ -101,6 +106,7 @@ public class RestAPIManager {
 			String line;
 			while ((line = br.readLine()) != null) {
 				content.append(line);
+                System.out.println(line);
 			}
 			br.close();
 			return content.toString();

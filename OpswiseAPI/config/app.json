@@ -11,7 +11,8 @@
             "create" : "/opswise/opswise_import_execute.do",
             "create_temp":"/opswise/resources/trigger/ops-create-temp-trigger",
             "launch":"/opswise/resources/trigger/ops-trigger-now",
-            "switch":"/opswise/resources/trigger/ops-enable-disable-triggers"
+            "switch":"/opswise/resources/trigger/ops-enable-disable-triggers",
+            "portal_enable":"/opswise/ops_trigger_cron.do"
         },
         "agents": {
             "list" : "/opswise/resources/agents/list"

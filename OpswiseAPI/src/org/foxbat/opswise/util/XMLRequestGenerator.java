@@ -5,11 +5,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.foxbat.opswise.core.OpswiseAPIManager;
 import org.json.JSONObject;
 import java.io.File;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -44,17 +42,19 @@ public class XMLRequestGenerator {
 	}
 
 	public static void main(String args[]) {
+
+
 		try
 		{
 		OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
 		JSONObject json = new JSONObject();
-		json.put("name", "tgr_autobot_job2");
-		json.put("task_name", "autobot_job2");
+		json.put("name", "tgr_autobot_job1");
+		json.put("task_name", "autobot_job3");
 		json.put("user_name", "chlr");
 		json.put("task_id", "");
 		json.put("sys_id", "");
 		JSONObject cron = new JSONObject();
-		cron.put("minutes", "34");
+		cron.put("minutes", "*/2");
 		cron.put("hours", "*");
 		cron.put("day_of_week", "*");
 		cron.put("day_of_month", "*");

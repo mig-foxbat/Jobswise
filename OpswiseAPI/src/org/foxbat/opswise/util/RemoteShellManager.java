@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class RemoteShellManager implements Runnable {
+
     private static JSch jsch;
     private Channel channel;
     private Session session;

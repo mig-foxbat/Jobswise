@@ -3,11 +3,13 @@
 <trigger-now>
     <name>${trigger.name}</name>
      <variables>
-    <#list trigger.vars?keys as var>
-        <variable>
+     <#if trigger.vars??>
+       <#list trigger.vars?keys as var>
+         <variable>
         	<name>${var}</name>
         	<value>${trigger.vars[var]} </value>
-        </variable>    
-    </#list>
+         </variable>
+        </#list>
+    </#if>
     </variables>
 </trigger-now> 

@@ -28,7 +28,7 @@ public class Utils {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(filepath));
-			StringBuffer content = new StringBuffer();
+			StringBuilder content = new StringBuilder();
             String line = null;
 			while ((line = br.readLine()) != null) {
 				content.append(line + "\n");

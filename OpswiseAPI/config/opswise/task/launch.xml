@@ -3,11 +3,13 @@
 <task-launch>
     <name>${task.name}</name>
     <variables>
-    <#list task.vars?keys as var>
-        <variable>
-        	<name>${var}</name>
-        	<value>${task.vars[var]} </value>
-        </variable>    
-    </#list>
+    <#if task.vars??>
+        <#list task.vars?keys as var>
+            <variable>
+                <name>${var}</name>
+                <value>${task.vars[var]} </value>
+            </variable>
+        </#list>
+    </#if>
     </variables>
 </task-launch> 
