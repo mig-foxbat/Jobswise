@@ -2,7 +2,6 @@ package org.foxbat.opswise.core;
 
 import java.util.Map;
 
-import org.foxbat.opswise.ducttape.OpsMockUserInterface;
 import org.foxbat.opswise.util.JsonX;
 import org.json.JSONObject;
 
@@ -15,10 +14,10 @@ public class TriggerHandler extends OpswiseObjectHandler {
     }
 
 
-    public void create(JSONObject request_config) {
-        OpsMockUserInterface ops_trigger = new OpsMockUserInterface(this.ops_config,new JsonX(request_config));
-        ops_trigger.createXMLFile();
-        ops_trigger.makeWebRequest();
+    public JsonX createCron(JsonX request_config) {
+        OpsMockUserInterface trigger = new OpsMockUserInterface(this.ops_config);
+        trigger.createTrigger(request_config);
+        return null; // the future implementation will have the request's response information in JsonX bundle.
     }
 
     public JSONObject launch(JSONObject request_config) {

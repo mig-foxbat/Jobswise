@@ -10,7 +10,7 @@ public class OpswiseAPIManager {
 
 
     public OpswiseAPIManager(String config_dir,String ops_config_file) {
-        this.ops_config = new JsonX(Utils.getJSONConfig(config_dir+"/"+ops_config_file));
+        this.ops_config = Utils.getJSONConfig(config_dir+"/"+ops_config_file);
         AppConfig.setConfigDir(config_dir);
     }
 
@@ -21,5 +21,21 @@ public class OpswiseAPIManager {
     public TriggerHandler getTriggerHandler() {
         return new TriggerHandler(this.ops_config);
     }
+
+
+    public static void main(String args[]) {
+       OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
+       TriggerHandler trigger = opswise.getTriggerHandler();
+       JsonX request = new JsonX();
+       request.setString("ops_trigger_cron.task","temp_job_name1");
+       request.setString("ops_trigger_cron.calendar","System Default");
+       request.setString("ops_trigger_cron.name","tgr_temp_job_name1");
+       request.setString("ops_trigger_cron.month","*");
+       request.setString("ops_trigger_cron.minutes","5/*");
+       request.setString("ops_trigger_cron.day_of_week","*");
+       request.setString("ops_trigger_cron.day_of_month","*");
+       trigger.createCron(request);
+    }
+
 
 }

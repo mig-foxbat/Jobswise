@@ -11,8 +11,10 @@ public class TaskHandler extends OpswiseObjectHandler {
         this.ops_config = ops_config;
     }
 
-    public JSONObject create(JSONObject request_json) {
-        return this.makeRequest(new JsonX(request_json), this.ops_config, OBJECT, "create");
+    public JsonX create(JsonX request_json) {
+        OpsMockUserInterface ops = new OpsMockUserInterface(ops_config);
+        ops.createTask(request_json);
+        return null;
     }
 
     public JSONObject launch(JSONObject request_json) {

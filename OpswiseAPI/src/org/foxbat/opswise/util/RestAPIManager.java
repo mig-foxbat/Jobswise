@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.apache.http.HttpEntity;
@@ -69,22 +70,22 @@ public class RestAPIManager {
 	}
 
 	public RestResponse postForm(String url,
-			Map<String, String> formdata) {
-		JsonX config = ops_config.getJSONObject("server");
-
+			JsonX formdata) {
+        JsonX config = ops_config.getJSONObject("server");
         System.out.println("http://" + config.getString("host") + ":"
                 + config.getString("port") + url);
-
 		HttpPost post = new HttpPost("http://" + config.getString("host") + ":"
 				+ config.getString("port") + url);
-		
 		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-		for (String data : formdata.keySet())
-			urlParameters.add(new BasicNameValuePair(data, formdata.get(data)));
+        Iterator<String> keys = formdata.keys();
+		while(keys.hasNext()) {
+            String key = keys.next();
+            urlParameters.add(new BasicNameValuePair(key, formdata.getString(key)));
+        }
 		try {
 			post.setEntity(new UrlEncodedFormEntity(urlParameters));
+            System.out.println(post.getAllHeaders().toString());
 			HttpResponse response = client.execute(post);
-            System.out.println("\n\n\n--------------------------------------------------\n\n\n");
 			RestResponse result = new RestResponse(
 					getResponseString(response.getEntity()),
 					response.getAllHeaders());

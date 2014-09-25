@@ -4,11 +4,11 @@
         "general":{ "login" : "/opswise/login.do"
         },
         "task":{
-            "create":"/opswise/resources/task/ops-task-create",
+            "create":"/opswise/ops_task_unix.do",
             "launch":"/opswise/resources/task/ops-task-launch"
         },
         "trigger":{
-            "create" : "/opswise/opswise_import_execute.do",
+            "create" : "/opswise/ops_trigger_cron.do",
             "create_temp":"/opswise/resources/trigger/ops-create-temp-trigger",
             "launch":"/opswise/resources/trigger/ops-trigger-now",
             "switch":"/opswise/resources/trigger/ops-enable-disable-triggers",

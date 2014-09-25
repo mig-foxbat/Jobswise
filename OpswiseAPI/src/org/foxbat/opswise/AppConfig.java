@@ -31,8 +31,7 @@ public class AppConfig {
 
 
 	private void loadConfig() {
-		JSONObject json = Utils.getJSONConfig(AppConfig.PATH+"/app.json");
-		this.config = new JsonX(json);
+        this.config = Utils.getJSONConfig(AppConfig.PATH+"/app.json");
 	}
 
 }

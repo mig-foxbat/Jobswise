@@ -3,6 +3,8 @@ package org.foxbat.opswise.util;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Iterator;
+
 public class JsonX {
 
 	/**
@@ -14,6 +16,12 @@ public class JsonX {
 		this.json = json;
 	}
 
+
+    public JsonX() {
+        this.json = new JSONObject();
+    }
+
+
 	public String getString(String key) {
 		try {
 			return (String) json.getString(key);
@@ -22,6 +30,11 @@ public class JsonX {
 			return null;
 		}
 	}
+
+    public Iterator<String> keys() {
+        return json.keys();
+    }
+
 
 	public JsonX getJSONObject(String key) {
 		try {
@@ -48,6 +61,7 @@ public class JsonX {
 	public void setString(String key,String value)
 	{
 		try {
+            this.json.remove(key);
 			this.json.put(key, value);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
