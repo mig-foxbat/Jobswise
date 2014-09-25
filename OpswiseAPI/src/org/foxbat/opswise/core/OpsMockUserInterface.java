@@ -24,13 +24,14 @@ public class OpsMockUserInterface {
     }
 
 
-    public void enableTrigger(JsonX request_config) {
-        RestAPIManager rest = new RestAPIManager(ops_config);
+    public void switchTrigger(JsonX request_config) {
         JsonX form = new JsonX(new JSONObject());
-        form.setString("sys_action","enable_trigger");
+        DBConnectionManager dbc = new DBConnectionManager(ops_config);
+        form.setString("sys_action",(request_config.getString("ops_trigger_cron.action")));
         form.setString("sys_target","ops_trigger_cron");
         form.setString("sys_uniqueName","sys_id");
-        form.setString("sys_uniqueValue", Utils.getMd5Hash(request_config.getString("name")));
+        form.setString("sys_uniqueValue", dbc.getTriggerSysID(request_config.getString("ops_trigger_cron.name")));
+        RestAPIManager rest = this.login();
         rest.postForm(AppConfig.getInstance().config.getJSONObject("url")
                 .getJSONObject("trigger").getString("portal_enable"), form);
     }
@@ -45,6 +46,10 @@ public class OpsMockUserInterface {
         RestAPIManager rest = this.login();
         rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("trigger").getString("create"),ref_config);
         this.logout(rest);
+        if (! dbc.doesTriggerExists(ref_config.getString("ops_trigger_cron.name"))) {
+            throw new OpswiseAPIException("Trigger Creation Failed");
+        }
+
     }
 
     public void createTask(JsonX request_config) {
@@ -55,6 +60,10 @@ public class OpsMockUserInterface {
         RestAPIManager rest = this.login();
         rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("task").getString("create"),ref_config);
         this.logout(rest);
+        System.out.println(ref_config.toString());
+        if( ! dbc.doesTaskExists(ref_config.getString("ops_task_unix.name")) )  {
+            throw new OpswiseAPIException("Task Creation failed");
+        }
     }
 
 

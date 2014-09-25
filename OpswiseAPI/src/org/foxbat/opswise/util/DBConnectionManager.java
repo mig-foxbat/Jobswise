@@ -11,6 +11,7 @@ public class DBConnectionManager {
 	private static final String SYSID_FOR_TASK = "SELECT sys_id FROM ops_task where name = '%s'; ";
     private static final String SYSID_FOR_AGENT = "SELECT sys_id FROM ops_agent where name = '%s'; ";
     private static final String SYSID_FOR_CALENDAR = "SELECT sys_id FROM ops_calendar where name = '%s'; ";
+    private static final String SYSID_FOR_TRIGGER = "SELECT sys_id FROM ops_trigger where name = '%s'; ";
 
     private JsonX ops_config;
 
@@ -35,6 +36,26 @@ public class DBConnectionManager {
     {
         this.ops_config = ops_config;
         this.initializeConnection();
+    }
+
+
+    public boolean doesTaskExists(String task_name) {
+        if(this.executeQuery(String.format(SYSID_FOR_TASK,task_name)) == null)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean doesTriggerExists(String trigger_name) {
+        if (this.executeQuery(String.format(SYSID_FOR_TRIGGER,trigger_name)) == null)
+            return false;
+        else
+            return true;
+
+    }
+
+    public String getTriggerSysID(String trigger_name) {
+        return this.executeQuery(String.format(SYSID_FOR_TRIGGER,trigger_name));
     }
 
 

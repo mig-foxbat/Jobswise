@@ -28,8 +28,10 @@ public class TriggerHandler extends OpswiseObjectHandler {
         return this.makeRequest(new JsonX(request_config),this.ops_config, OBJECT, "create_temp");
     }
 
-    public JSONObject switchTrigger(JSONObject request_config) {
-        return this.makeRequest(new JsonX(request_config),this.ops_config, OBJECT, "switch");
+    public JSONObject switchTrigger(JsonX request_config) {
+        OpsMockUserInterface trigger = new OpsMockUserInterface(this.ops_config);
+        trigger.switchTrigger(request_config);
+        return null;
     }
 
     public Map<String, Object> queryTriggers() {
