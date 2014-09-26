@@ -37,3 +37,18 @@ For enabling/disabling triggers:
 	request.setString("ops_trigger_cron.action","disable_trigger");
 	request.setString("ops_trigger_cron.name","temp_trigger_1");
 	trigger.switchTrigger(request);
+	
+For deleting Unix Tasks:
+	OpswiseAPIManager opswise = new OpswiseAPIManager("/home/user/dev_root/Jobswise/OpswiseAPI/config","na_opswise.json");
+	TaskHandler task = opswise.getTaskHandler();
+	JsonX request = new JsonX();
+	request.setString("ops_task_unix.name","##temp_job_name");
+	task.delete(request);   
+	
+For deleting Cron Triggers:
+	OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
+	TriggerHandler trigger = opswise.getTriggerHandler();
+	JsonX request = new JsonX();
+	request.setString("ops_trigger_cron.name","temp_trigger");
+	trigger.delete(request);
+
