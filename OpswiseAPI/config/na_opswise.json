@@ -2,10 +2,10 @@
     "server": {
         "username": "username",
         "password": "password",
-        "host": "opswise master node",
+        "host": "host",
         "port": "80",
         "database": {
-            "host": "opswise-mysql-host",
+            "host": "host",
             "username": "opswise",
             "password": "opswise",
             "port": "3306",

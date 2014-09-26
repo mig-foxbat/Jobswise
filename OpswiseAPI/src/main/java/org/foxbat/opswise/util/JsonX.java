@@ -69,10 +69,10 @@ public class JsonX {
 		}
 	}
 	
-	public void setJSONObject(String key,JSONObject value)
+	public void setJsonX(String key,JsonX value)
 	{
 		try {
-			this.json.put(key, value);
+			this.json.put(key, value.getJson());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

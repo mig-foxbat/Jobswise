@@ -58,12 +58,11 @@ public class RestAPIManager {
 		post.setEntity(bae);
 		try {
 			HttpResponse response = client.execute(post);
-			RestResponse result = new RestResponse(
-					getResponseString(response.getEntity()),
-					response.getAllHeaders());
-			return result;
+			return  new RestResponse(
+                    getResponseString(response.getEntity()),
+                    response.getAllHeaders());
 
-		} catch (IOException e) {
+        } catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -74,7 +73,7 @@ public class RestAPIManager {
         JsonX config = ops_config.getJSONObject("server");
 		HttpPost post = new HttpPost("http://" + config.getString("host") + ":"
 				+ config.getString("port") + url);
-		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+		List<NameValuePair> urlParameters = new ArrayList<>();
         Iterator<String> keys = formdata.keys();
 		while(keys.hasNext()) {
             String key = keys.next();
@@ -83,10 +82,9 @@ public class RestAPIManager {
 		try {
 			post.setEntity(new UrlEncodedFormEntity(urlParameters));
 			HttpResponse response = client.execute(post);
-			RestResponse result = new RestResponse(
-					getResponseString(response.getEntity()),
-					response.getAllHeaders());
-			return result;
+			return new RestResponse(
+                    getResponseString(response.getEntity()),
+                    response.getAllHeaders());
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -100,11 +98,10 @@ public class RestAPIManager {
 		try {
 			InputStream is = entity.getContent();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			StringBuffer content = new StringBuffer();
+			StringBuilder content = new StringBuilder();
 			String line;
 			while ((line = br.readLine()) != null) {
 				content.append(line);
-                System.out.println(line);
 			}
 			br.close();
 			return content.toString();

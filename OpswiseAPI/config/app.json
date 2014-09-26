@@ -4,7 +4,7 @@
         "general":{ "login" : "/opswise/login.do"
         },
         "task":{
-            "create":"/opswise/ops_task_unix.do",
+            "create":"/opswise/resources/task/ops-task-create",
             "launch":"/opswise/resources/task/ops-task-launch",
             "delete":"/opswise/ops_task_unix_list.do"
         },

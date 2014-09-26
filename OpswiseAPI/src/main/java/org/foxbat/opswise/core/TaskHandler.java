@@ -1,5 +1,7 @@
 package org.foxbat.opswise.core;
 
+import org.foxbat.opswise.util.DBConnectionManager;
+import org.foxbat.opswise.util.OpswiseModelManager;
 import org.json.JSONObject;
 import org.foxbat.opswise.util.JsonX;
 
@@ -12,9 +14,18 @@ public class TaskHandler extends OpswiseObjectHandler {
     }
 
     public JsonX create(JsonX request_json) {
-        OpsMockUserInterface ops = new OpsMockUserInterface(ops_config);
-        ops.createTask(request_json);
-        return null;
+        JsonX output = this.makeRequest(request_json, this.ops_config, OBJECT, "create");
+        DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
+        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+        try {
+            if (!ops_model.doesTaskExists(request_json.getString("name"))) {
+                throw new OpswiseAPIException("Task Creation failed");
+            }
+        }
+        finally {
+            dbc.close();
+            return output;
+        }
     }
 
     public JsonX delete(JsonX request_json) {
@@ -24,11 +35,11 @@ public class TaskHandler extends OpswiseObjectHandler {
     }
 
 
-    public JSONObject launch(JSONObject request_json) {
+    public JsonX launch(JSONObject request_json) {
         return this.makeRequest(new JsonX(request_json), this.ops_config, OBJECT, "launch");
     }
 
-    public JSONObject queryTaskList(JSONObject request_json) {
+    public JsonX queryTaskList(JSONObject request_json) {
         return this.makeRequest(new JsonX(request_json),this.ops_config, OBJECT, "query");
     }
 

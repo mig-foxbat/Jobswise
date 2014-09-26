@@ -1,6 +1,0 @@
-<#assign trigger = config?eval>
-<enable-disable-trigger>
-    <#list trigger?keys as var>
-    <trigger enable="${trigger[var]}" name="${var}"/>
-    </#list>
-</enable-disable-trigger> 

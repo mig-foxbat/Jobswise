@@ -12,16 +12,16 @@ import org.json.JSONObject;
 
 public abstract class OpswiseObjectHandler 
 {
-	protected JSONObject makeRequest(JsonX request_config,JsonX ops_config,String object,String action)
+	protected JsonX makeRequest(JsonX request_config,JsonX ops_config,String object,String action)
 	{
 		String xmlcontent = XMLRequestGenerator.generateRequestXML(request_config,
-				AppConfig.getPath()+"/opswise/"+object+"/" + action+".xml");
+				"opswise/"+object+"/" + action+".xml");
 		RestAPIManager rest = new RestAPIManager(ops_config);
 		Map<String,String> headers = new HashMap<>();
 		headers.put("Content-Type", "application/xml");
 		RestResponse output = rest.postDocument(
 				headers,AppConfig.getInstance().config.getJSONObject("url")
 						.getJSONObject(object).getString(action), xmlcontent);
-		return Utils.XMLtoJsonConverter(output.payload);
+		return new JsonX(Utils.XMLtoJsonConverter(output.payload));
 	}
 }

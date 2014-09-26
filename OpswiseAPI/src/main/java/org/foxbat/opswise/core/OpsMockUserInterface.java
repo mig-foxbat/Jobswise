@@ -111,24 +111,30 @@ public class OpsMockUserInterface {
 
     }
 
-    public void createTask(JsonX request_config) {
-        JsonX ref_config = Utils.getJSONConfig(AppConfig.getPath() + "/opswise/task/create.json");
-        ref_config = Utils.mergeMaps(ref_config, request_config);
-        DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
-        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
-        ref_config.setString("ops_task_unix.agent", ops_model.getAgentSysID(request_config.getString("ops_task_unix.agent")));
-        RestAPIManager rest = this.login();
-        rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("task").getString("create"), ref_config);
-        this.logout(rest);
-        try {
-            if (!ops_model.doesTaskExists(ref_config.getString("ops_task_unix.name"))) {
-                throw new OpswiseAPIException("Task Creation failed");
-            }
-        }
-        finally {
-            dbc.close();
-        }
-    }
+
+    /*
+    The Below code has been replaced with the API provided by Opswise.
+
+     */
+
+//    public void createTask(JsonX request_config) {
+//        JsonX ref_config = Utils.getJSONConfig(AppConfig.getPath() + "/opswise/task/create.json");
+//        ref_config = Utils.mergeMaps(ref_config, request_config);
+//        DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
+//        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+//        ref_config.setString("ops_task_unix.agent", ops_model.getAgentSysID(request_config.getString("ops_task_unix.agent")));
+//        RestAPIManager rest = this.login();
+//        rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("task").getString("create"), ref_config);
+//        this.logout(rest);
+//        try {
+//            if (!ops_model.doesTaskExists(ref_config.getString("ops_task_unix.name"))) {
+//                throw new OpswiseAPIException("Task Creation failed");
+//            }
+//        }
+//        finally {
+//            dbc.close();
+//        }
+//    }
 
 
     private void logout(RestAPIManager rest) {
