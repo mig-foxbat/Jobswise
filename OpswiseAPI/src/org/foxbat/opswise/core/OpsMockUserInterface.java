@@ -5,11 +5,11 @@ import org.foxbat.opswise.util.*;
 import org.json.JSONObject;
 
 public class OpsMockUserInterface {
-	private JsonX ops_config;
+    private JsonX ops_config;
 
-	public OpsMockUserInterface(JsonX ops_config) {
+    public OpsMockUserInterface(JsonX ops_config) {
         this.ops_config = ops_config;
-	}
+    }
 
 
     public RestAPIManager login() {
@@ -25,44 +25,108 @@ public class OpsMockUserInterface {
 
 
     public void switchTrigger(JsonX request_config) {
-        JsonX form = new JsonX(new JSONObject());
+        JsonX form = new JsonX();
         DBConnectionManager dbc = new DBConnectionManager(ops_config);
-        form.setString("sys_action",(request_config.getString("ops_trigger_cron.action")));
-        form.setString("sys_target","ops_trigger_cron");
-        form.setString("sys_uniqueName","sys_id");
-        form.setString("sys_uniqueValue", dbc.getTriggerSysID(request_config.getString("ops_trigger_cron.name")));
+        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+        form.setString("sys_action", (request_config.getString("ops_trigger_cron.action")));
+        form.setString("sys_target", "ops_trigger_cron");
+        form.setString("sys_uniqueName", "sys_id");
+        form.setString("sys_uniqueValue", ops_model.getTriggerSysID(request_config.getString("ops_trigger_cron.name")));
         RestAPIManager rest = this.login();
         rest.postForm(AppConfig.getInstance().config.getJSONObject("url")
                 .getJSONObject("trigger").getString("portal_enable"), form);
+        try {
+            if (request_config.getString("ops_trigger_cron.action").equalsIgnoreCase("disable_trigger"))
+                if (ops_model.isTriggerEnabled(request_config.getString("ops_trigger_cron.name")))
+                    throw new OpswiseAPIException("Disabling Cron Trigger Failed");
+                else if (request_config.getString("ops_trigger_cron.action").equalsIgnoreCase("enable_trigger"))
+                    if (ops_model.isTriggerEnabled(request_config.getString("ops_trigger_cron.name")))
+                        throw new OpswiseAPIException("Enabling Cron Trigger failed");
+        } finally {
+            dbc.close();
+        }
     }
+
+
+    public void deleteTrigger(JsonX request_config) {
+        JsonX form = new JsonX();
+        DBConnectionManager dbc = new DBConnectionManager(ops_config);
+        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+        form.setString("sys_action", "sysverb_delete");
+        form.setString("sys_target", "ops_trigger_cron");
+        form.setString("sys_uniqueName", "sys_id");
+        form.setString("sys_uniqueValue", ops_model.getTriggerSysID(request_config.getString("ops_trigger_cron.name")));
+        RestAPIManager rest = this.login();
+        rest.postForm(AppConfig.getInstance().config.getJSONObject("url")
+                .getJSONObject("trigger").getString("delete"), form);
+        try {
+            if (ops_model.doesTriggerExists(request_config.getString("ops_trigger_cron.name")))
+                throw new OpswiseAPIException("Cron Trigger deletion failed");
+        }
+        finally {
+            dbc.close();
+        }
+    }
+
+
+    public void deleteTask(JsonX request_config) {
+        JsonX form = new JsonX();
+        DBConnectionManager dbc = new DBConnectionManager(ops_config);
+        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+        form.setString("sys_action", "sysverb_delete");
+        form.setString("sys_target", "ops_task_unix");
+        form.setString("sys_uniqueName", "sys_id");
+        form.setString("sys_uniqueValue", ops_model.getTaskSysID(request_config.getString("ops_task_unix.name")));
+        RestAPIManager rest = this.login();
+        rest.postForm(AppConfig.getInstance().config.getJSONObject("url")
+                .getJSONObject("task").getString("delete"), form);
+        try {
+            if (ops_model.doesTaskExists(request_config.getString("ops_task_unix.name")))
+                throw new OpswiseAPIException("Unix Task deletion failed");
+        }
+        finally {
+            dbc.close();
+        }
+    }
+
 
 
     public void createTrigger(JsonX request_config) {
         JsonX ref_config = Utils.getJSONConfig(AppConfig.getPath() + "/opswise/trigger/create.json");
-        ref_config = Utils.mergeMaps(ref_config,request_config);
+        ref_config = Utils.mergeMaps(ref_config, request_config);
         DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
-        ref_config.setString("ops_trigger_cron.task",dbc.getTaskSysID(ref_config.getString("ops_trigger_cron.task")));
-        ref_config.setString("ops_trigger_cron.calendar",dbc.getCalendarSysID(ref_config.getString("ops_trigger_cron.calendar")));
+        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+        ref_config.setString("ops_trigger_cron.task", ops_model.getTaskSysID(ref_config.getString("ops_trigger_cron.task")));
+        ref_config.setString("ops_trigger_cron.calendar", ops_model.getCalendarSysID(ref_config.getString("ops_trigger_cron.calendar")));
         RestAPIManager rest = this.login();
-        rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("trigger").getString("create"),ref_config);
+        rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("trigger").getString("create"), ref_config);
         this.logout(rest);
-        if (! dbc.doesTriggerExists(ref_config.getString("ops_trigger_cron.name"))) {
-            throw new OpswiseAPIException("Trigger Creation Failed");
+        try {
+            if (!ops_model.doesTriggerExists(ref_config.getString("ops_trigger_cron.name"))) {
+                throw new OpswiseAPIException("Trigger Creation Failed");
+            }
+        } finally {
+            dbc.close();
         }
 
     }
 
     public void createTask(JsonX request_config) {
         JsonX ref_config = Utils.getJSONConfig(AppConfig.getPath() + "/opswise/task/create.json");
-        ref_config = Utils.mergeMaps(ref_config,request_config);
+        ref_config = Utils.mergeMaps(ref_config, request_config);
         DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
-        ref_config.setString("ops_task_unix.agent", dbc.getAgentSysID(request_config.getString("ops_task_unix.agent")));
+        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+        ref_config.setString("ops_task_unix.agent", ops_model.getAgentSysID(request_config.getString("ops_task_unix.agent")));
         RestAPIManager rest = this.login();
-        rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("task").getString("create"),ref_config);
+        rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("task").getString("create"), ref_config);
         this.logout(rest);
-        System.out.println(ref_config.toString());
-        if( ! dbc.doesTaskExists(ref_config.getString("ops_task_unix.name")) )  {
-            throw new OpswiseAPIException("Task Creation failed");
+        try {
+            if (!ops_model.doesTaskExists(ref_config.getString("ops_task_unix.name"))) {
+                throw new OpswiseAPIException("Task Creation failed");
+            }
+        }
+        finally {
+            dbc.close();
         }
     }
 
@@ -71,7 +135,6 @@ public class OpsMockUserInterface {
         //TODO
         //http://pit-dev-owmaster1.snc1/opswise/logout.do
     }
-
 
 
 }

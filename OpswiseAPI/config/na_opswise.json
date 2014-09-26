@@ -1,17 +1,11 @@
 {
     "server": {
-        "username": "chlr",
-        "password": "seriesT-800",
-        "host": "pit-dev-owmaster1.snc1",
+        "username": "username",
+        "password": "password",
+        "host": "opswise master node",
         "port": "80",
-        "ssh": {
-            "host": "pit-dev-owmaster1.snc1",
-            "user": "chlr",
-            "port": "22",
-            "dir": "/home/chlr/optimus/"
-        },
         "database": {
-            "host": "pit-dev-owmaster1.snc1",
+            "host": "opswise-mysql-host",
             "username": "opswise",
             "password": "opswise",
             "port": "3306",

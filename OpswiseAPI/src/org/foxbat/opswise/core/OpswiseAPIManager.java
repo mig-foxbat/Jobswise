@@ -1,7 +1,6 @@
 package org.foxbat.opswise.core;
 
 import org.foxbat.opswise.AppConfig;
-import org.foxbat.opswise.util.DBConnectionManager;
 import org.foxbat.opswise.util.Utils;
 import org.foxbat.opswise.util.JsonX;
 
@@ -53,6 +52,20 @@ public class OpswiseAPIManager {
 //        request.setString("ops_task_unix.command","echo All Hail Megatron");
 //        request.setString("ops_task_unix.agent","pit-dev-owagent1 - AGNT000712");
 //        task.create(request);
+
+
+//          OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
+//          TaskHandler task = opswise.getTaskHandler();
+//          JsonX request = new JsonX();
+//          request.setString("ops_task_unix.name","##temp_job_name");
+//          task.delete(request);
+
+
+//          OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
+//          TriggerHandler trigger = opswise.getTriggerHandler();
+//          JsonX request = new JsonX();
+//          request.setString("ops_trigger_cron.name","temp_trigger");
+//          trigger.delete(request);
 
 
 

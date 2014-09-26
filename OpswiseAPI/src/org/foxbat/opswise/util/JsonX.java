@@ -24,7 +24,7 @@ public class JsonX {
 
 	public String getString(String key) {
 		try {
-			return (String) json.getString(key);
+			return json.getString(key);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;

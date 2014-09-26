@@ -17,6 +17,13 @@ public class TaskHandler extends OpswiseObjectHandler {
         return null;
     }
 
+    public JsonX delete(JsonX request_json) {
+        OpsMockUserInterface ops = new OpsMockUserInterface(ops_config);
+        ops.deleteTask(request_json);
+        return null;
+    }
+
+
     public JSONObject launch(JSONObject request_json) {
         return this.makeRequest(new JsonX(request_json), this.ops_config, OBJECT, "launch");
     }
@@ -24,4 +31,5 @@ public class TaskHandler extends OpswiseObjectHandler {
     public JSONObject queryTaskList(JSONObject request_json) {
         return this.makeRequest(new JsonX(request_json),this.ops_config, OBJECT, "query");
     }
+
 }

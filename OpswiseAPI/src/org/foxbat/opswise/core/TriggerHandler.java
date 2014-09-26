@@ -20,6 +20,13 @@ public class TriggerHandler extends OpswiseObjectHandler {
         return null; // the future implementation will have the request's response information in JsonX bundle.
     }
 
+    public JsonX delete(JsonX request_config) {
+        OpsMockUserInterface trigger = new OpsMockUserInterface(this.ops_config);
+        trigger.deleteTrigger(request_config);
+        return null;
+    }
+
+
     public JSONObject launch(JSONObject request_config) {
         return this.makeRequest(new JsonX(request_config), this.ops_config, OBJECT, "launch");
     }
