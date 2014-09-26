@@ -21,13 +21,17 @@ For creating triggers:
 
 For creating tasks:
 	
-	OpswiseAPIManager opswise = new OpswiseAPIManager("/home/user/dev_root/Jobswise/OpswiseAPI/config","na_opswise.json");
-	TaskHandler task = opswise.getTaskHandler();
-	JsonX request = new JsonX();
-	request.setString("ops_task_unix.name","temp_job_name10");
-	request.setString("ops_task_unix.command","echo All Hail Megatron");
-	request.setString("ops_task_unix.agent","pit-dev-owagent1 - AGNT000712");
-	task.create(request);
+        OpswiseAPIManager opswise = new OpswiseAPIManager("/home/user/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
+        JsonX json = new JsonX();
+        json.setString("name", "autobot_job2");
+        json.setString("command", "echo All Hail Megatron");
+        json.setString("agent", "pit-dev-owagent1 - AGNT0007");
+        JsonX email = new JsonX();
+        email.setString("address", "mig.flanker@gmail.com");
+        email.setString("connection", "Gmail - dw_etl");
+        json.setJsonX("email", email);
+        JsonX result = opswise.getTaskHandler().create(json);
+        System.out.println(result);
 
 For enabling/disabling triggers:
 
