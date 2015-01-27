@@ -11,6 +11,7 @@
         },
         "trigger":{
             "create" : "/opswise/ops_trigger_cron.do",
+            "update": "/opswise/ops_trigger_cron_list.do",
             "create_temp":"/opswise/resources/trigger/ops-create-temp-trigger",
             "delete":"/opswise/ops_trigger_cron_list.do",
             "launch":"/opswise/resources/trigger/ops-trigger-now",

@@ -25,7 +25,14 @@ public class TriggerHandler extends OpswiseObjectHandler {
         return null;
     }
 
-
+    public JsonX update(JsonX request_json,String task_name) {
+        OpsMockUserInterface ops = new OpsMockUserInterface(ops_config);
+        ops.updateTrigger(request_json, task_name);
+        JsonX response = new JsonX();
+        response.setString("success","job updated");
+        return response;
+    }
+ 
     public JsonX launch(JSONObject request_config) {
         return this.makeRequest(new JsonX(request_config), this.ops_config, OBJECT, "launch");
     }

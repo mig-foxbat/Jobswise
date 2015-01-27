@@ -112,19 +112,32 @@ public class OpsMockUserInterface {
     }
 
 
+    public void updateTrigger(JsonX request_config,String trigger_name) {
+        DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
+        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+        if (request_config.hasKey("ops_trigger_cron.task"))
+            request_config.setString("ops_trigger_cron.task",ops_model.getTaskSysID(request_config.getString("ops_trigger_cron.task")));
+        request_config.setString("sys_target","ops_trigger_cron");
+        request_config.setString("sys_action","sysverb_update");
+        request_config.setString("sys_uniqueName","sys_id");
+        request_config.setString("sys_uniqueValue",ops_model.getTriggerSysID(trigger_name));
+        RestAPIManager rest = this.login();
+        RestResponse response = rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("trigger").getString("update"), request_config);
+        this.logout(rest);
+        dbc.close();
+    }
+
     public void updateTask(JsonX request_config,String task_name) {
         DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
         OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
-        if (request_config.hasKey("ops_task_unix.agent"))
-            request_config.setString("ops_task_unix.agent",ops_model.getAgentSysID(request_config.getString("ops_task_unix.agent")));
+        if (request_config.hasKey("ops_task_unix.task"))
+            request_config.setString("ops_task_unix.task",ops_model.getTaskSysID(request_config.getString("ops_task_unix.task")));
         request_config.setString("sys_target","ops_task_unix");
         request_config.setString("sys_action","sysverb_update");
         request_config.setString("sys_uniqueName","sys_id");
         request_config.setString("sys_uniqueValue",ops_model.getTaskSysID(task_name));
         RestAPIManager rest = this.login();
         RestResponse response = rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("task").getString("update"), request_config);
-        System.out.println("I am here");
-        System.out.println(response.payload);
         this.logout(rest);
         dbc.close();
     }
