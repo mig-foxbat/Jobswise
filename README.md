@@ -57,4 +57,17 @@ For deleting Cron Triggers:
 	JsonX request = new JsonX();
 	request.setString("ops_trigger_cron.name","temp_trigger");
 	trigger.delete(request);
+	
+For updating cron trigger:
+
+        OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
+        JsonX json = new JsonX();
+        json.setString("ops_trigger_cron.name", "tgr_u_chlr_sql_test_mod1");
+        json.setString("ops_trigger_cron.month", "*");
+        json.setString("ops_trigger_cron.minutes", "2,6");
+        json.setString("ops_trigger_cron.hours", "12");
+        json.setString("ops_trigger_cron.day_of_week", "3");
+        json.setString("ops_trigger_cron.day_of_month", "4");
+        JsonX result = opswise.getTriggerHandler().update(json,"tgr_u_chlr_sql_test_mod");
+        System.out.println(result);
 
