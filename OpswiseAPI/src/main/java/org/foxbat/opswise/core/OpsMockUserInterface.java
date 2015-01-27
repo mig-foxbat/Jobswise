@@ -112,30 +112,33 @@ public class OpsMockUserInterface {
     }
 
 
-    /*
-    The Below code has been replaced with the API provided by Opswise.
+    public void updateTask(JsonX request_config,String task_name) {
+        DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
+        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+        if (request_config.hasKey("ops_task_unix.agent"))
+            request_config.setString("ops_task_unix.agent",ops_model.getAgentSysID(request_config.getString("ops_task_unix.agent")));
+        request_config.setString("sys_target","ops_task_unix");
+        request_config.setString("sys_action","sysverb_update");
+        request_config.setString("sys_uniqueName","sys_id");
+        request_config.setString("sys_uniqueValue",ops_model.getTaskSysID(task_name));
+        RestAPIManager rest = this.login();
+        RestResponse response = rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("task").getString("update"), request_config);
+        System.out.println("I am here");
+        System.out.println(response.payload);
+        this.logout(rest);
+        dbc.close();
+    }
 
-     */
-
-//    public void createTask(JsonX request_config) {
-//        JsonX ref_config = Utils.getJSONConfig(AppConfig.getPath() + "/opswise/task/create.json");
-//        ref_config = Utils.mergeMaps(ref_config, request_config);
+//      Feature currently not working
+//    public void updateTaskEmailNotifications(JsonX request_config,String taskname) {
 //        DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
 //        OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
-//        ref_config.setString("ops_task_unix.agent", ops_model.getAgentSysID(request_config.getString("ops_task_unix.agent")));
-//        RestAPIManager rest = this.login();
-//        rest.postForm(AppConfig.getInstance().config.getJSONObject("url").getJSONObject("task").getString("create"), ref_config);
-//        this.logout(rest);
-//        try {
-//            if (!ops_model.doesTaskExists(ref_config.getString("ops_task_unix.name"))) {
-//                throw new OpswiseAPIException("Task Creation failed");
-//            }
-//        }
-//        finally {
-//            dbc.close();
-//        }
+//        request_config.setString("sys_target","ops_email_notification");
+//        request_config.setString("sys_action","sysverb_update");
+//        request_config.setString("sys_uniqueName","sys_id");
+//        request_config.setString("sys_uniqueValue",ops_model.getNotificationID(taskname));
 //    }
-
+//
 
     private void logout(RestAPIManager rest) {
         //TODO

@@ -5,6 +5,7 @@
         },
         "task":{
             "create":"/opswise/resources/task/ops-task-create",
+            "update":"/opswise/ops_task_unix.do",
             "launch":"/opswise/resources/task/ops-task-launch",
             "delete":"/opswise/ops_task_unix_list.do"
         },

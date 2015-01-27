@@ -31,5 +31,6 @@
     "ops_task_unix.agent_cluster_var_check":"FALSE",
     "ops_task_unix.agent":"428888ec7f00000120ecec198de6fd4d",
     "sys_target":"ops_task_unix",
-    "sys_action":"sysverb_insert"
+    "sys_action":"sysverb_update",
+    "sys_uniqueName":"sys_id"
 }

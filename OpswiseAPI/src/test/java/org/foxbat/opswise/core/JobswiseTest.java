@@ -1,13 +1,16 @@
 package org.foxbat.opswise.core;
 
+import junit.runner.Version;
 import org.foxbat.opswise.util.DBConnectionManager;
 import org.foxbat.opswise.util.JsonX;
 import org.foxbat.opswise.util.OpswiseModelManager;
+import org.json.JSONObject;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
+
+
 
 public class JobswiseTest {
 
@@ -15,11 +18,12 @@ public class JobswiseTest {
     static DBConnectionManager dbc;
     static OpswiseModelManager modelManager;
 
-    private static final String TASKNAME = "temp_job_name_10";
-    private static final String TRIGGERNAME = "tgr_temp_job_name_10";
+    private static final String TASKNAME = "temp_job_name_30";
+    private static final String TRIGGERNAME = "tgr_temp_job_name_30";
 
     @BeforeClass
     public static void setUp() throws Exception {
+         System.out.println(Version.id());
          opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
          dbc = new DBConnectionManager(opswise.ops_config);
          modelManager = new OpswiseModelManager(dbc);
@@ -43,7 +47,6 @@ public class JobswiseTest {
         request.setString("ops_trigger_cron.day_of_week","*");
         request.setString("ops_trigger_cron.day_of_month","*");
         trigger.createCron(request);
-        System.out.println(request.getString("ops_trigger_cron.task"));
         assertEquals(modelManager.doesTriggerExists(request.getString("ops_trigger_cron.name")), true);
     }
 
@@ -60,6 +63,14 @@ public class JobswiseTest {
         json.setJsonX("email", email);
         opswise.getTaskHandler().create(json);
         assertEquals(modelManager.doesTaskExists(json.getString("name")), true);
+    }
+
+    @Test(timeout = 10000)
+    public void test_1_LaunchTask() throws Exception {
+        OpswiseAPIManager opswise = new OpswiseAPIManager("/Users/chlr/dev_root/intellij/Jobswise/OpswiseAPI/config","na_opswise.json");
+        JSONObject json = new JSONObject();
+        json.put("name","###temp_job");
+        opswise.getTaskHandler().launch(json);
     }
 
 

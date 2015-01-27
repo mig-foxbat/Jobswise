@@ -9,8 +9,8 @@ import java.io.File;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
 import org.foxbat.opswise.AppConfig;
+import freemarker.template.TemplateExceptionHandler;
 
 public class XMLRequestGenerator {
 

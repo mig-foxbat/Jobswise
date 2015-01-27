@@ -17,15 +17,27 @@ public class TaskHandler extends OpswiseObjectHandler {
         JsonX output = this.makeRequest(request_json, this.ops_config, OBJECT, "create");
         DBConnectionManager dbc = new DBConnectionManager(this.ops_config);
         OpswiseModelManager ops_model = new OpswiseModelManager(dbc);
+        String sys_id = ops_model.getTaskSysID(request_json.getString("name"));
+
         try {
-            if (!ops_model.doesTaskExists(request_json.getString("name"))) {
+            if (sys_id == null) {
                 throw new OpswiseAPIException("Task Creation failed");
             }
         }
         finally {
             dbc.close();
-            return output;
+            JsonX response = new JsonX();
+            response.setString("sys_id",sys_id);
+            return response;
         }
+    }
+
+    public JsonX update(JsonX request_json,String task_name) {
+        OpsMockUserInterface ops = new OpsMockUserInterface(ops_config);
+        ops.updateTask(request_json,task_name);
+        JsonX response = new JsonX();
+        response.setString("success","job updated");
+        return response;
     }
 
     public JsonX delete(JsonX request_json) {

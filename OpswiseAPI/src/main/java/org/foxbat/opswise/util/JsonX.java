@@ -78,6 +78,10 @@ public class JsonX {
 			e.printStackTrace();
 		}
 	}
+
+    public boolean hasKey(String key) {
+        return json.has(key);
+    }
 	
 
 }

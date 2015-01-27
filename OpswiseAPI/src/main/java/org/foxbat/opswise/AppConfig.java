@@ -2,7 +2,7 @@ package org.foxbat.opswise;
 
 import org.foxbat.opswise.util.JsonX;
 import org.foxbat.opswise.util.Utils;
-import org.json.JSONObject;
+
 
 public class AppConfig {
 	private static AppConfig singleton;

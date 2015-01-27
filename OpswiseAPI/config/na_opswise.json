@@ -2,12 +2,12 @@
     "server": {
         "username": "username",
         "password": "password",
-        "host": "host",
+        "host": "opswise_web_server",
         "port": "80",
         "database": {
-            "host": "host",
-            "username": "opswise",
-            "password": "opswise",
+            "host": "opswise_db_server",
+            "username": "username",
+            "password": "password",
             "port": "3306",
             "database": "opswise"
         }

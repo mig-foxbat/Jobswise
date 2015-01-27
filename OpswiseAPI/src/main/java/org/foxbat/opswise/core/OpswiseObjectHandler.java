@@ -8,7 +8,7 @@ import org.foxbat.opswise.util.RestAPIManager;
 import org.foxbat.opswise.util.RestResponse;
 import org.foxbat.opswise.util.Utils;
 import org.foxbat.opswise.util.XMLRequestGenerator;
-import org.json.JSONObject;
+
 
 public abstract class OpswiseObjectHandler 
 {
